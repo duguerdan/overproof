@@ -39,13 +39,17 @@ public class FileOperate {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        boolean flag = false;
         for (int i = 0; i < data[0].length; i++) {
             BigDecimal val1 = data[0][i].add(data[1][i]);
             BigDecimal val2 = data[0][i].subtract(data[2][i]);
             if (val1.compareTo(data[3][i]) > 0 || val2.compareTo(data[3][i]) < 0) {
+                flag = true;
                 logger.warn("文件" + fileName + " 第 " + (i + 2) + " 列超差!");
             }
         }
-        
+        if (flag) {
+            Media.play();
+        }
     }
 }

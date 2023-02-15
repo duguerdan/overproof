@@ -17,11 +17,14 @@ public class Media {
         javafx.scene.media.AudioClip audioClip = new javafx.scene.media.AudioClip(uri.toString());
         // audioClip.setCycleCount(2);// 播放次数
         audioClip.play();
-        try {
-            // 延迟，不关闭main用于播放音乐
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    
+        while (audioClip.isPlaying()) {
+            try {
+                // 延迟，不关闭main用于播放音乐
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     
