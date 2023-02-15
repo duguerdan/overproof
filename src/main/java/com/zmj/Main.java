@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -25,7 +26,12 @@ public class Main {
         if (!complete.exists()) {
             complete.mkdirs();
         }
-        File[] files = source.listFiles();
+        File[] files = source.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return !name.equals(".gitkeep");
+            }
+        });
         if (files != null && files.length > 0) {
             for (File file : files) {
                 String fileName = file.getName();
