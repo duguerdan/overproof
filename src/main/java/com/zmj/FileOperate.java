@@ -30,20 +30,23 @@ public class FileOperate {
             Sheet sheet = workbook.getSheetAt(0);
             // 最后一行行号
             int lastRowNum = sheet.getLastRowNum();
-            for (int i = 1; i <= lastRowNum; i++) {
+            /*for (int i = 1; i <= lastRowNum; i++) {
                 Row row = sheet.getRow(i);
-                for (int j = 2; j < row.getLastCellNum(); j++) {
-                    data[i - 1][j - 2] = BigDecimal.valueOf(row.getCell(j).getNumericCellValue());
-                }
-            }
+                data[i - 1] = readCell(data, i, row);
+            }*/
+            logger.info("文件{},最后一行行号:{}", fileName, lastRowNum + 1);
+            data[0] = readRow(sheet.getRow(1));
+            data[1] = readRow(sheet.getRow(2));
+            data[2] = readRow(sheet.getRow(3));
+            data[3] = readRow(sheet.getRow(lastRowNum));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         boolean flag = false;
         for (int i = 0; i < data[0].length; i++) {
             BigDecimal val1 = data[0][i].add(data[1][i]);
-            BigDecimal val2 = data[0][i].subtract(data[2][i]);
-            if (val1.compareTo(data[3][i]) > 0 || val2.compareTo(data[3][i]) < 0) {
+            BigDecimal val2 = data[0][i].add(data[2][i]);
+            if (data[3][i].compareTo(val1) > 0 || data[3][i].compareTo(val2) < 0) {
                 flag = true;
                 logger.warn("文件" + fileName + " 第 " + (i + 2) + " 列超差!");
             }
@@ -51,5 +54,13 @@ public class FileOperate {
         if (flag) {
             Media.play();
         }
+    }
+    
+    private static BigDecimal[] readRow(Row row) {
+        BigDecimal[] rowData = new BigDecimal[15];
+        for (int j = 2; j < row.getLastCellNum(); j++) {
+            rowData[j - 2] = BigDecimal.valueOf(row.getCell(j).getNumericCellValue());
+        }
+        return rowData;
     }
 }

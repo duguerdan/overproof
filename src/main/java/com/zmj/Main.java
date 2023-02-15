@@ -22,26 +22,33 @@ public class Main {
         if (!source.exists()) {
             source.mkdirs();
         }
-        if (!complete.exists()) {
-            complete.mkdirs();
-        }
-        File[] files = source.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return !name.equals(".gitkeep");
+        // if (!complete.exists()) {
+        //     complete.mkdirs();
+        // }
+        for (int i = 0; i < 10; i++) {
+            File[] files = source.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return !name.equals(".gitkeep") && !name.startsWith("~$");
+                }
+            });
+            if (files != null && files.length > 0) {
+                for (File file : files) {
+                    String fileName = file.getName();
+                    // 读文件计算
+                    FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
+                    // 移动文件
+                    // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
+                    // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
+                }
+            } else {
+                logger.info("没有目录或文件, 要将文件放到程序根目录下的source目录下!");
             }
-        });
-        if (files != null && files.length > 0) {
-            for (File file : files) {
-                String fileName = file.getName();
-                // 读文件计算
-                FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
-                // 移动文件
-                // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
-                // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } else {
-            logger.info("没有目录或文件, 要将文件放到程序根目录下的source目录下!");
         }
         logger.info("End...");
     }
