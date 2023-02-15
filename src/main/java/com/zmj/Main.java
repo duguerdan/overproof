@@ -1,6 +1,5 @@
 package com.zmj;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +37,11 @@ public class Main {
                 // 读文件计算
                 FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
                 // 移动文件
-                String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
-                FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
+                // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
+                // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
             }
         } else {
-            logger.info("没有目录或文件, 要将文件放到程序根目录下的source目录下, 已读过的文件会移到complete目录下!");
+            logger.info("没有目录或文件, 要将文件放到程序根目录下的source目录下!");
         }
         logger.info("End...");
     }

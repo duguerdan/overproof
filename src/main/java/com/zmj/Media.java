@@ -1,8 +1,9 @@
 package com.zmj;
 
+import javafx.scene.media.AudioClip;
+
 import java.io.File;
 import java.net.URI;
-import java.util.Objects;
 
 /**
  * @author zhangmingjian
@@ -11,10 +12,11 @@ import java.util.Objects;
 public class Media {
     
     public static void play() {
-        String path = Objects.requireNonNull(Media.class.getClassLoader().getResource("media/prompt.wav")).getPath();
+        // String context = Objects.requireNonNull(Media.class.getClassLoader().getResource("")).getPath();
+        String path = "prompt.wav";
         File file = new File(path);
         URI uri = file.toURI();
-        javafx.scene.media.AudioClip audioClip = new javafx.scene.media.AudioClip(uri.toString());
+        AudioClip audioClip = new AudioClip(uri.toString());
         // audioClip.setCycleCount(2);// 播放次数
         audioClip.play();
     
