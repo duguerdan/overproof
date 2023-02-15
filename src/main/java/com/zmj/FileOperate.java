@@ -21,7 +21,7 @@ public class FileOperate {
      * 读取excel
      */
     public static void readExcel(InputStream inputStream, String fileName) {
-        
+        logger.info("=====读取文件: {}", fileName);
         BigDecimal[][] data = new BigDecimal[4][15];
         
         try (
