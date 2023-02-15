@@ -3,8 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 logs
-complete
-source
+
 
 ### IntelliJ IDEA ###
 .idea/
