@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author zhangmingjian
@@ -25,31 +27,40 @@ public class Main {
         // if (!complete.exists()) {
         //     complete.mkdirs();
         // }
-        for (int i = 0; i < 10; i++) {
-            File[] files = source.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return !name.equals(".gitkeep") && !name.startsWith("~$");
+        int interval = 60;
+        logger.info("请将文件放到以下目录中, 程序每{}秒扫描一次此目录\n{}", interval, source.getCanonicalPath());
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    scanningDirectory(source);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            });
-            if (files != null && files.length > 0) {
-                for (File file : files) {
-                    String fileName = file.getName();
-                    // 读文件计算
-                    FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
-                    // 移动文件
-                    // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
-                    // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
-                }
-            } else {
-                logger.info("没有目录或文件, 要将文件放到程序根目录下的source目录下!");
             }
-            try {
-                Thread.sleep(60000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        }, 0, interval * 1000);
+        // logger.info("End...");
+    }
+    
+    private static void scanningDirectory(File source) throws IOException {
+        File[] files = source.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return !name.equals(".gitkeep") && !name.startsWith("~$");
             }
+        });
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                String fileName = file.getName();
+                // 读文件计算
+                FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
+                // 移动文件
+                // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
+                // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
+            }
+        } else {
+            logger.info("没有扫描到文件, 请将文件放到" + source.getCanonicalPath() + "目录下!");
         }
-        logger.info("End...");
     }
 }
