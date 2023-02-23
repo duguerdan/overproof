@@ -27,7 +27,7 @@ public class Main {
         // if (!complete.exists()) {
         //     complete.mkdirs();
         // }
-        int interval = 60;
+        int interval = 10;
         logger.info("请将文件放到以下目录中, 程序每{}秒扫描一次此目录\n{}", interval, source.getCanonicalPath());
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -35,8 +35,8 @@ public class Main {
             public void run() {
                 try {
                     scanningDirectory(source);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
                 }
             }
         }, 0, interval * 1000);
@@ -47,7 +47,7 @@ public class Main {
         File[] files = source.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return !name.equals(".gitkeep") && !name.startsWith("~$");
+                return name.endsWith(".csv") && !name.startsWith("~$");
             }
         });
         if (files != null && files.length > 0) {

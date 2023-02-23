@@ -20,14 +20,14 @@ public class Media {
         // audioClip.setCycleCount(2);// 播放次数
         audioClip.play();
     
-        while (audioClip.isPlaying()) {
+        /*while (audioClip.isPlaying()) {
             try {
                 // 延迟，不关闭main用于播放音乐
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
     }
     
     public static void main(String[] args) {
