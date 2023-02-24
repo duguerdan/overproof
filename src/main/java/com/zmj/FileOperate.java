@@ -41,7 +41,7 @@ public class FileOperate {
     
             Duration duration = Duration.between(localDateTime, LocalDateTime.now());
             long millis = duration.toMillis();
-            System.out.println(localDateTime + "====" + LocalDateTime.now() + "=====" + millis);
+            logger.info(LocalDateTime.now() + " - " + localDateTime + " = " + millis);
             if (millis > 12 * 1000) {
                 logger.info("文件{},无新数据", fileName);
                 return;
