@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -30,11 +32,17 @@ public class FileOperate {
             Sheet sheet = workbook.getSheetAt(0);
             // 最后一行行号
             int lastRowNum = sheet.getLastRowNum();
-            Cell cell = sheet.getRow(lastRowNum).getCell(1);
-            LocalTime localTime = cell.getLocalDateTimeCellValue().toLocalTime();
-            Duration duration = Duration.between(localTime, LocalTime.now());
+            Cell cell0 = sheet.getRow(lastRowNum).getCell(0);
+            LocalDate localDate = cell0.getLocalDateTimeCellValue().toLocalDate();
+            Cell cell1 = sheet.getRow(lastRowNum).getCell(1);
+            LocalTime localTime = cell1.getLocalDateTimeCellValue().toLocalTime();
+    
+            LocalDateTime localDateTime = localDate.atTime(localTime);
+    
+            Duration duration = Duration.between(localDateTime, LocalDateTime.now());
             long millis = duration.toMillis();
-            if (millis > 15 * 1000) {
+            System.out.println(localDateTime + "====" + LocalDateTime.now() + "=====" + millis);
+            if (millis > 12 * 1000) {
                 logger.info("文件{},无新数据", fileName);
                 return;
             }
