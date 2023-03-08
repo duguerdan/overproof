@@ -54,7 +54,7 @@ public class Main {
             for (File file : files) {
                 String fileName = file.getName();
                 // 读文件计算
-                FileOperate.readExcel(Files.newInputStream(file.toPath()), fileName);
+                FileOperate.readFile(Files.newInputStream(file.toPath()), fileName);
                 // 移动文件
                 // String fileNameOrigin = fileName.substring(0, fileName.lastIndexOf("."));
                 // FileUtils.moveFile(file, new File("complete/" + fileNameOrigin + "_" + System.currentTimeMillis() + ".csv"));
