@@ -1,5 +1,6 @@
 package com.zmj;
 
+import com.opencsv.exceptions.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +8,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,8 +21,8 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         logger.info("Run...");
-        File source = new File("source");
-        File complete = new File("complete");
+        File source = new File("D:/Exports");
+        // File complete = new File("complete");
         if (!source.exists()) {
             source.mkdirs();
         }
@@ -43,11 +45,11 @@ public class Main {
         // logger.info("End...");
     }
     
-    private static void scanningDirectory(File source) throws IOException {
+    private static void scanningDirectory(File source) throws IOException, ParseException, CsvException {
         File[] files = source.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return name.endsWith(".csv") && !name.startsWith("~$");
+                return name.toLowerCase().endsWith(".csv") && !name.startsWith("~$");
             }
         });
         if (files != null && files.length > 0) {
