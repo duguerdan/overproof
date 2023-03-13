@@ -63,7 +63,7 @@ public class CSVUtils {
     }
     
     public static BigDecimal[] readRow(String[] row) {
-        BigDecimal[] rowData = new BigDecimal[16];
+        BigDecimal[] rowData = new BigDecimal[row.length - 2];
         for (int i = 2; i < row.length; i++) {
             String val = row[i];
             if (StringUtils.isNotBlank(val)) {

@@ -20,7 +20,7 @@ public class FileOperate {
      * 读取excel
      */
     public static void readFile(InputStream inputStream, String fileName) throws IOException, ParseException, CsvException {
-        BigDecimal[][] data = new BigDecimal[4][16];
+        BigDecimal[][] data = new BigDecimal[4][];
         
         if (!CSVUtils.readCSV(inputStream, fileName, data)) {
             return;
