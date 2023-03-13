@@ -44,10 +44,10 @@ public class CSVUtils {
             long now = new Date().getTime();
             long millis = now - date;
             // logger.info(date + " - " + now + " = " + millis);
-            /*if (millis > 12 * 1000) {
+            if (millis > 12 * 1000) {
                 logger.info("文件{},无新数据", fileName);
                 return false;
-            }*/
+            }
             
             logger.info("读取文件{},最新一行行号:{}", fileName, size);
             data[0] = readRow(list.get(1));
