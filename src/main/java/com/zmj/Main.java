@@ -38,7 +38,7 @@ public class Main {
                 try {
                     scanningDirectory(source);
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    logger.error(e.getMessage(), e);
                 }
             }
         }, 0, interval * 1000);
