@@ -67,7 +67,10 @@ public class CSVUtils {
         for (int i = 2; i < row.length; i++) {
             String val = row[i];
             if (StringUtils.isNotBlank(val)) {
-                rowData[i - 2] = new BigDecimal(val);
+                try {
+                    rowData[i - 2] = new BigDecimal(val);
+                } catch (Exception ignored) {
+                }
             }
         }
         return rowData;
